@@ -9,13 +9,10 @@ set.seed(seed)
 library("TruncatedNormal"); library("mvtnorm"); library("Matrix")
 library("ggplot2"); library("latex2exp")
 
-
 load("Financial.RData")
-
 
 p = ncol(matFF)
 n = length(y)
-
 
 mu0 = matrix(0, nrow = p, ncol = 1)
 Sigma0 = diag(rep(3,p))
@@ -41,7 +38,6 @@ sdTheta1     = apply(X=smoot$smoothState$values[,,1], MARGIN=2, FUN = sd)
 sdTheta2     = apply(X=smoot$smoothState$values[,,2], MARGIN=2, FUN = sd)
 
 timeMC = difftime(Sys.time(), startTime, units=("secs"))[[1]]
-
 
 smoothParams = getSmooothParams(y,
                                 mu0 = mu0,
@@ -86,8 +82,6 @@ meanTheta2_MF = paramsMF$meanBeta[indSeq2]
 sdTheta1_MF = sqrt(paramsMF$diagV[indSeq1])
 sdTheta2_MF = sqrt(paramsMF$diagV[indSeq2])
 
-
-
 ### Smoothing EP
 startTime = Sys.time()
 paramsEP = getParamsEP(X = X,
@@ -102,9 +96,7 @@ meanTheta2_EP = paramsEP$meanBeta[indSeq2]
 sdTheta1_EP = sqrt(paramsEP$diagOmegaEP[indSeq1])
 sdTheta2_EP = sqrt(paramsEP$diagOmegaEP[indSeq2])
 
-
-
-# Comparison different methods smoothing trajectories
+# Comparison of different methods smoothing: trajectories
 Mean = c(meanTheta1,meanTheta2,
          meanTheta1_PFM,meanTheta2_PFM,
          meanTheta1_MF,meanTheta2_MF,
@@ -143,8 +135,6 @@ Plot_smooth = ggplot(Data_plot,aes(x=Time,col=Method))+
 Plot_smooth
 ggsave(filename='Plot_smooth.png', plot=Plot_smooth, device="png",
        width = 30, height = 12, units="cm")
-
-
 
 ### Comparison different methods via box-plot
 PFM_Diff_mean_Theta1 = meanTheta1 - meanTheta1_PFM
@@ -199,9 +189,8 @@ Plot_Diff
 ggsave(filename='Plot_Diff.png', plot=Plot_Diff, device="png",
        width = 30, height = 20, units="cm")
 
-### Comparison different methods: time
+### Comparison of different methods: time
 timeMC
 timeEP
 timeMF
 timePFM
-
