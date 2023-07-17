@@ -8,6 +8,7 @@ set.seed(seed)
 
 library("TruncatedNormal"); library("mvtnorm"); library("Matrix")
 library("ggplot2"); library("latex2exp")
+library(viridis)
 
 load("Financial.RData")
 
@@ -124,7 +125,7 @@ Plot_smooth = ggplot(Data_plot,aes(x=Time,col=Method))+
   geom_line(aes(y=Mean),size=1.2)+
   geom_line(aes(y=Low),linetype = "dashed",size=1.2)+
   geom_line(aes(y=Upp),linetype = "dashed",size=1.2)+
-  scale_colour_manual(values = alpha(c("black", "red","blue","green"),
+  scale_colour_manual(values = alpha(c("black", viridis(3)),
                                      c(1,1,1,1)))+theme_bw()+
   theme(axis.title=element_blank(),legend.title = element_blank(),
         axis.text=element_text(size=20),strip.text = element_text(size=30),
@@ -168,8 +169,8 @@ Functional = as.factor(rep(1:2,each=6*n))
 Diff       = c(Diff_Mean,Diff_logsd)
 
 Data_boxplot = data.frame(Diff,Method,Par,Functional)
-col_meth   = c("red","blue","green")
-
+scale_color_viridis(discrete=TRUE)
+col_meth   = viridis(3) #c("red","blue","green")
 # New label names for Plot
 levels(Data_boxplot$Par)= c("1"=TeX("$\\theta_{1}$"), "2"=TeX("$\\theta_{2}$"))
 levels(Data_boxplot$Functional) = 
@@ -194,3 +195,4 @@ timeMC
 timeEP
 timeMF
 timePFM
+
