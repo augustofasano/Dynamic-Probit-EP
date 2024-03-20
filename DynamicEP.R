@@ -8,7 +8,7 @@ set.seed(seed)
 
 library("TruncatedNormal"); library("mvtnorm"); library("Matrix")
 library("ggplot2"); library("latex2exp")
-library(viridis)
+library("viridis")
 
 load("Financial.RData")
 
